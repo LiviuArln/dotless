@@ -2,8 +2,9 @@
 				  xmlns:gs="http://spring.io/guides/gs-producing-web-service">
    <soapenv:Header/>
    <soapenv:Body>
-      <gs:getCountryRequest>
+      <gs:addPersonRequest>
          <gs:name>Spain</gs:name>
-      </gs:getCountryRequest>
+         <gs:email>Spain@spain</gs:email>
+      </gs:addPersonRequest>
    </soapenv:Body>
 </soapenv:Envelope>

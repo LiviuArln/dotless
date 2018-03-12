@@ -19,6 +19,10 @@ package hello;
 import static org.assertj.core.api.Assertions.*;
 
 import io.spring.guides.gs_producing_web_service.GetCountryRequest;
+import io.spring.guides.gs_producing_web_service.GetCountryResponse;
+
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -51,7 +55,8 @@ public class ApplicationIntegrationTests {
         GetCountryRequest request = new GetCountryRequest();
         request.setName("Spain");
 
-        assertThat(ws.marshalSendAndReceive("http://localhost:"
-                + port + "/ws", request)).isNotNull();
+        GetCountryResponse response = (GetCountryResponse) ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request);
+        assertThat(response).isNotNull();
+        assertEquals("Madrid", response.getCountry().getCapital());
     }
 }
