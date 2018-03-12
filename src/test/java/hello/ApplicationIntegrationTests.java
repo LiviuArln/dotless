@@ -20,8 +20,11 @@ import static org.assertj.core.api.Assertions.*;
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.junit.runners.MethodSorters;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.web.server.LocalServerPort;
@@ -32,15 +35,19 @@ import org.springframework.ws.client.core.WebServiceTemplate;
 
 import com.dell.test.AddPersonRequest;
 import com.dell.test.AddPersonResponse;
+import com.dell.test.PersonListRequest;
+import com.dell.test.PersonListResponse;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class ApplicationIntegrationTests {
 
     private Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
 
     @LocalServerPort
     private int port = 0;
+    
 
     @Before
     public void init() throws Exception {
@@ -52,9 +59,40 @@ public class ApplicationIntegrationTests {
     public void testSendAndReceive() {
         WebServiceTemplate ws = new WebServiceTemplate(marshaller);
         AddPersonRequest request = new AddPersonRequest();
-        request.setName("Spain");
+        request.setName("Somebody");
+        request.setEmail("Somebody@someplace.com");
 
         AddPersonResponse response = (AddPersonResponse) ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request);
         assertThat(response).isNotNull();
     }
+    
+    @Test
+    public void testContent() {
+    	WebServiceTemplate ws = new WebServiceTemplate(marshaller);
+        PersonListRequest request = new PersonListRequest();
+
+        PersonListResponse response = (PersonListResponse) ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request);
+        assertThat(response).isNotNull();
+        assertEquals(1, response.getPersons().size());
+        assertEquals("noone", response.getPersons().get(0).getName());
+    }
+    
+    @Test
+    public void testNameUpdate() {
+        WebServiceTemplate ws = new WebServiceTemplate(marshaller);
+        AddPersonRequest addRequest = new AddPersonRequest();
+        addRequest.setName("Aria");
+        addRequest.setEmail("noone@bravos.net");
+        ws.marshalSendAndReceive("http://localhost:" + port + "/ws", addRequest);
+        
+        
+        PersonListRequest request = new PersonListRequest();
+        PersonListResponse response = (PersonListResponse) ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request);
+        assertThat(response).isNotNull();
+        assertEquals(1, response.getPersons().size());
+        assertEquals("Aria", response.getPersons().get(0).getName());
+        assertEquals("noone@bravos.net", response.getPersons().get(0).getEmail());
+    }
+    
+    
 }

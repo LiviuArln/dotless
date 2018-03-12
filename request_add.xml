@@ -1,0 +1,9 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:test="http://dell.com/test">
+   <soapenv:Header/>
+   <soapenv:Body>
+      <test:addPersonRequest>
+         <test:name>Liviu</test:name>
+         <test:email>liviu_aurelian@yahoo.com</test:email>
+      </test:addPersonRequest>
+   </soapenv:Body>
+</soapenv:Envelope>

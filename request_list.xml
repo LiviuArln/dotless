@@ -1,0 +1,7 @@
+<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
+	xmlns:test="http://dell.com/test">
+	<soapenv:Header />
+	<soapenv:Body>
+		<test:personListRequest />
+	</soapenv:Body>
+</soapenv:Envelope>
