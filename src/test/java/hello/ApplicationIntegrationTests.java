@@ -17,10 +17,6 @@
 package hello;
 
 import static org.assertj.core.api.Assertions.*;
-
-import io.spring.guides.gs_producing_web_service.GetCountryRequest;
-import io.spring.guides.gs_producing_web_service.GetCountryResponse;
-
 import static org.junit.Assert.assertEquals;
 
 import org.junit.Before;
@@ -34,6 +30,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.ClassUtils;
 import org.springframework.ws.client.core.WebServiceTemplate;
 
+import com.dell.test.AddPersonRequest;
+import com.dell.test.AddPersonResponse;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 public class ApplicationIntegrationTests {
@@ -45,18 +44,17 @@ public class ApplicationIntegrationTests {
 
     @Before
     public void init() throws Exception {
-        marshaller.setPackagesToScan(ClassUtils.getPackageName(GetCountryRequest.class));
+        marshaller.setPackagesToScan(ClassUtils.getPackageName(AddPersonRequest.class));
         marshaller.afterPropertiesSet();
     }
 
     @Test
     public void testSendAndReceive() {
         WebServiceTemplate ws = new WebServiceTemplate(marshaller);
-        GetCountryRequest request = new GetCountryRequest();
+        AddPersonRequest request = new AddPersonRequest();
         request.setName("Spain");
 
-        GetCountryResponse response = (GetCountryResponse) ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request);
+        AddPersonResponse response = (AddPersonResponse) ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request);
         assertThat(response).isNotNull();
-        assertEquals("Madrid", response.getCountry().getCapital());
     }
 }

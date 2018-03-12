@@ -1,0 +1,37 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://dell.com/test" targetNamespace="http://dell.com/test"
+	elementFormDefault="qualified">
+
+	<xs:element name="addPersonRequest">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="xs:string" />
+				<xs:element name="email" type="xs:string" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="addPersonResponse">
+		<xs:complexType />
+	</xs:element>
+
+
+	<xs:element name="personListRequest">
+		<xs:complexType />
+	</xs:element>
+
+	<xs:element name="personListResponse">
+		<xs:complexType name="persons">
+			<xs:sequence>
+				<xs:element name="currency" type="tns:person" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="person">
+		<xs:sequence>
+			<xs:element name="name" type="xs:string" />
+			<xs:element name="email" type="xs:string" />
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

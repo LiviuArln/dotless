@@ -17,11 +17,10 @@ repositories {
     mavenCentral()
 }
 
-// tag::xsd[]
 task genJaxb {
     ext.sourcesDir = "${buildDir}/generated-sources/jaxb"
     ext.classesDir = "${buildDir}/classes/jaxb"
-    ext.schema = "src/main/resources/countries.xsd"
+    ext.schema = "src/main/resources/persons.xsd"
 
     outputs.dir classesDir
 
@@ -53,13 +52,11 @@ task genJaxb {
         }
     }
 }
-// end::xsd[]
 
 task afterEclipseImport {
 	dependsOn "genJaxb"
 }
 
-// tag::jaxb[]
 configurations {
     jaxb
 }
@@ -70,7 +67,6 @@ bootJar {
     from genJaxb.classesDir
 }
 
-// tag::dependencies[]
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -81,6 +77,4 @@ dependencies {
     jaxb("org.glassfish.jaxb:jaxb-xjc:2.2.11")
     compile(files(genJaxb.classesDir).builtBy(genJaxb))
 }
-// end::dependencies[]
-// end::jaxb[]
 

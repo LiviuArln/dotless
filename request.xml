@@ -1,10 +1,10 @@
 <soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"
-				  xmlns:gs="http://spring.io/guides/gs-producing-web-service">
+				  xmlns:dell="http://dell.com/test">
    <soapenv:Header/>
    <soapenv:Body>
-      <gs:addPersonRequest>
-         <gs:name>Spain</gs:name>
-         <gs:email>Spain@spain</gs:email>
-      </gs:addPersonRequest>
+      <dell:addPersonRequest>
+         <dell:name>Spain</dell:name>
+         <dell:email>Spain@spain</dell:email>
+      </dell:addPersonRequest>
    </soapenv:Body>
 </soapenv:Envelope>
