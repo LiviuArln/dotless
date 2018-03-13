@@ -7,6 +7,7 @@ import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
 import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
+import org.apache.commons.validator.routines.EmailValidator;
 
 import com.dell.test.AddPersonRequest;
 import com.dell.test.AddPersonResponse;
@@ -29,6 +30,9 @@ public class PersonEndpoint {
 	@PayloadRoot(namespace = NAMESPACE_URI, localPart = "addPersonRequest")
 	@ResponsePayload
 	public AddPersonResponse addPerson(@RequestPayload AddPersonRequest request) {
+		if(!EmailValidator.getInstance().isValid(request.getEmail())) {
+			throw new IllegalArgumentException("Invalid email address!");
+		}
 		personRepository.add(request.getName(), request.getEmail());
 		return new AddPersonResponse();
 	}

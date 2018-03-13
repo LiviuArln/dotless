@@ -94,5 +94,15 @@ public class ApplicationIntegrationTests {
         assertEquals("noone@bravos.net", response.getPersons().get(0).getEmail());
     }
     
+
+    @Test(expected = org.springframework.ws.soap.client.SoapFaultClientException.class)
+    public void testException() {
+    	WebServiceTemplate ws = new WebServiceTemplate(marshaller);
+        AddPersonRequest request = new AddPersonRequest();
+        request.setName("wrong");
+        request.setEmail("wrong#email");
+
+        ws.marshalSendAndReceive("http://localhost:" + port + "/ws", request);
+    }
     
 }

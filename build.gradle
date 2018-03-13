@@ -74,7 +74,9 @@ dependencies {
     compile("org.springframework.boot:spring-boot-starter-web-services")
     testCompile("org.springframework.boot:spring-boot-starter-test")
     compile("wsdl4j:wsdl4j:1.6.1")
+    compile("commons-validator:commons-validator:1.4.1")
     jaxb("org.glassfish.jaxb:jaxb-xjc:2.2.11")
+
     compile(files(genJaxb.classesDir).builtBy(genJaxb))
 }
 
