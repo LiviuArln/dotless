@@ -62,7 +62,7 @@ configurations {
 }
 
 bootJar {
-    baseName = 'gs-producing-web-service'
+    baseName = 'dotless'
     version =  '0.1.0'
     from genJaxb.classesDir
 }
